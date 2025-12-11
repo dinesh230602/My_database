@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Support Database</title>
+    <link rel="stylesheet" href="style.css" class="style">
+</head>
+<body>
+
+<h2>Add New Record</h2>
+<input type="text" id="name" placeholder="Name">
+<input type="text" id="company" placeholder="Company Name">
+<input type="text" id="serial" placeholder="Tally Serial Number">
+<textarea id="query" placeholder="Enter Query"></textarea>
+<select id="status">
+    <option value="Solved">Solved</option>
+    <option value="Not Solved">Not Solved</option>
+</select>
+<button onclick="addData()">Submit</button>
+
+<hr>
+
+<h2>Search Data</h2>
+<input type="text" id="search" placeholder="Search..." onkeyup="searchData()">
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Serial</th>
+            <th>Query</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody id="dataTable"></tbody>
+</table>
+
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyApJjWfdCTMEJXWHN0h5VZUeEfgWma9c54",
+  authDomain: "companydatabase-11f83.firebaseapp.com",
+  projectId: "companydatabase-11f83",
+  storageBucket: "companydatabase-11f83.firebasestorage.app",
+  messagingSenderId: "204428701038",
+  appId: "1:204428701038:web:ee3df9e62fdc04815ba57f"
+};
+
+// Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.addData = async function() {
+        let data = {
+            name: document.getElementById("name").value,
+            company: document.getElementById("company").value,
+            serial: document.getElementById("serial").value,
+            query: document.getElementById("query").value,
+            status: document.getElementById("status").value
+        };
+
+        await addDoc(collection(db, "support"), data);
+        alert("Data Added!");
+        loadData();
+    }
+
+    window.loadData = async function() {
+        const snapshot = await getDocs(collection(db, "support"));
+        let table = "";
+        snapshot.forEach(doc => {
+            let d = doc.data();
+            table += `
+                <tr>
+                    <td>${d.name}</td>
+                    <td>${d.company}</td>
+                    <td>${d.serial}</td>
+                    <td>${d.query}</td>
+                    <td>${d.status}</td>
+                </tr>`;
+        });
+        document.getElementById("dataTable").innerHTML = table;
+    }
+
+    window.searchData = async function() {
+        let text = document.getElementById("search").value.toLowerCase();
+        const snapshot = await getDocs(collection(db, "support"));
+        let table = "";
+        snapshot.forEach(doc => {
+            let d = doc.data();
+            let combined = `${d.name} ${d.company} ${d.serial} ${d.query} ${d.status}`.toLowerCase();
+            if (combined.includes(text)) {
+                table += `
+                    <tr>
+                        <td>${d.name}</td>
+                        <td>${d.company}</td>
+                        <td>${d.serial}</td>
+                        <td>${d.query}</td>
+                        <td>${d.status}</td>
+                    </tr>`;
+            }
+        });
+        document.getElementById("dataTable").innerHTML = table;
+    }
+
+    loadData();
+</script>
+
+ </body>
+</html>

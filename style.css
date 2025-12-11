@@ -1,0 +1,103 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7f8;
+    color: #333;
+    padding: 30px;
+    margin: 0;
+}
+
+h2 {
+    color: #1f3c88;
+    border-bottom: 2px solid #1f3c88;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+/* Inputs and Textarea */
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #1f3c88;
+    box-shadow: 0 0 5px rgba(31, 60, 136, 0.3);
+    outline: none;
+}
+
+/* Button */
+button {
+    background-color: #1f3c88;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #3a5bb8;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #1f3c88;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Search Input */
+#search {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    th, td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+    }
+}
